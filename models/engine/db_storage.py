@@ -4,6 +4,12 @@ This module defines DBStorage class
 """
 import os
 from models.base_model import Base
+from models.user import User
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -34,6 +40,7 @@ class DBStorage:
         """
         Query on current database session
         """
+        obj_list = [User, State, City, Amenity, Place, Review]
         obj_dict = {}
 
         if cls:
@@ -42,15 +49,6 @@ class DBStorage:
                 key = "{}.{}".format(cls.__name__, row.id)
                 obj_dict[key] = row
         else:
-            from models.user import User
-            from models.city import City
-            from models.state import State
-            from models.amenity import Amenity
-            from models.place import Place
-            from models.review import Review
-
-            obj_list = [User, State, City, Amenity, Place, Review]
-
             for obj in obj_list:
                 result = DBStorage.__session.query(obj)
 
