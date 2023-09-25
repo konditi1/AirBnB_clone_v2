@@ -28,7 +28,6 @@ class DBStorage:
         DBStorage.__engine = create_engine(connection_string, pool_pre_ping=True)
 
         if os.getenv("HBNB_ENV") == "test":
-            from model.base_model import Base
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -49,12 +48,14 @@ class DBStorage:
             from models.amenity import Amenity
             from models.place import Place
             from models.review import Review
+
             obj_list = [User, State, City, Amenity, Place, Review]
 
             for obj in obj_list:
                 result = DBStorage.__session.query(obj)
+
                 for row in result:
-                    key = "{}.{}".format(cls.__name__, row.id)
+                    key = "{}.{}".format(type(row).__name__, row.id)
                     obj_dict[key] = row
 
         return obj_dict
@@ -69,7 +70,7 @@ class DBStorage:
         """
         Commit all changes of the current database session
         """
-        DBStorage.__session.commit()
+        self.__session.commit()
 
     def delete(self, obj=None):
         """
