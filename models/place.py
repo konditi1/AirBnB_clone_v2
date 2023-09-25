@@ -32,8 +32,22 @@ class Place(BaseModel, Base):
             "Amenity",
             secondary=place_amenity,
             viewonly=False,
-            backref="place_amenities"
     )
+
+    @property
+    def amenities(self):
+        """
+        Get the list of Amenity instances
+        """
+        from models import storage
+        place_amenities = []
+        amenities = storage.all(Review)
+        
+        for amenity in amenities:
+            if amenity.place_id == self.id:
+                place_amenities.append[city]
+
+        return place_amenities
 
     @property
     def reviews(self):
