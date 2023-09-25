@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
+from models.review import Review
 from sqlalchemy import Column, Integer, ForeignKey, String, Float
+from sqlalchemy.orm import relationship
 
 
 class Place(BaseModel, Base):
@@ -26,7 +28,7 @@ class Place(BaseModel, Base):
         """
         from models import storage
         place_reviews = []
-        reviews = storage.all(City)
+        reviews = storage.all(Review)
         
         for review in reviews:
             if review.place_id == self.id:
