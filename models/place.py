@@ -6,6 +6,14 @@ from sqlalchemy import Column, Integer, ForeignKey, String, Float
 from sqlalchemy.orm import relationship
 
 
+place_amenity = Table(
+        "place_amenity",
+        Base.metadata,
+        Column("place_id", ForeignKey("places.id"), primary_key=True, nullable=False),
+        Column("amenity_id", ForeignKey("amenities.id"), primary_key=True,nullable=False)
+)
+
+
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
@@ -20,6 +28,12 @@ class Place(BaseModel, Base):
     latitude = Column(Float(), nullable=True) 
     longitude = Column(Float(), nullable=True)
     reviews = relationship("Review", backref="place")
+    amenities = relationship(
+            "Amenity",
+            secondary=place_amenity,
+            viewonly=False,
+            backref="place_amenities"
+    )
 
     @property
     def reviews(self):
