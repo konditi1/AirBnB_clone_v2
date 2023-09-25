@@ -7,7 +7,6 @@ from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import DateTime
 from datetime import datetime
-from datetime import datetime
 
 
 Base = declarative_base()

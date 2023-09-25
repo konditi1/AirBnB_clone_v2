@@ -15,8 +15,11 @@ class State(BaseModel, Base):
     @property
     def cities(self):
         """ Gets the list of City instances """
+        from models import storage
         state_cities = []
-        for city in self.city:
+        cities = storage.all(City)
+        
+        for city in cities:
             if city.state_id == self.id:
                 state_cities.append[city]
 
