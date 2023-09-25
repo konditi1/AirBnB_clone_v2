@@ -3,6 +3,7 @@
 This module defines DBStorage class
 """
 import os
+from models.base_model import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -23,10 +24,10 @@ class DBStorage:
         password = os.getenv("HBNB_MYSQL_PWD") 
         host = os.getenv("HBNB_MYSQL_HOST")
         connection_string = "mysql+mysqldb://{}:{}@{}:3306/{}"\
-                .format(user, password, host, db)
+                .format(user, password, host, database)
         DBStorage.__engine = create_engine(connection_string, pool_pre_ping=True)
 
-        if os.getenv("HBNB_ENV" == "test"):
+        if os.getenv("HBNB_ENV") == "test":
             from model.base_model import Base
             Base.metadata.drop_all(self.__engine)
 
