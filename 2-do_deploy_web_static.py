@@ -6,7 +6,7 @@ Fabric script to distribute an archive to web servers
 from fabric.api import run, put, env
 from os.path import exists
 
-env.hosts = ['<54.174.82.78', '18.204.6.61']
+env.hosts = ['54.174.82.78', '18.204.6.61']
 env.user = 'ubuntu'
 env.key_filename = '/home/ubuntu/.ssh/id_rsa'
 
