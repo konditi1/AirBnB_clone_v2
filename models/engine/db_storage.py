@@ -31,7 +31,8 @@ class DBStorage:
         host = os.getenv("HBNB_MYSQL_HOST")
         connection_string = "mysql+mysqldb://{}:{}@{}:3306/{}" \
             .format(user, password, host, database)
-        DBStorage.__engine = create_engine(connection_string, pool_pre_ping=True)
+        DBStorage.__engine = create_engine(
+            connection_string, pool_pre_ping=True)
 
         if os.getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
@@ -60,13 +61,13 @@ class DBStorage:
 
     def close(self):
         """
-        Calls the remove method on the private session attribute to close the session.
+        Calls the remove method on private session attribute to close session.
         """
         self.__session.close()
 
     def new(self, obj):
         """
-        Add the object to the current database session 
+        Add the object to the current database session
         """
         DBStorage.__session.add(obj)
 
