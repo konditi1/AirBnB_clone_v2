@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """ import Flask from web_flask/__init__.py """
-from flask import Flask, render_template
+from flask import Flask
+
 app = Flask(__name__)
+
+
 @app.route('/', strict_slashes=False)
 def hello_hbnb():
     """print("Hello HBNB!")"""
