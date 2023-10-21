@@ -29,6 +29,7 @@ def python(text='is cool'):
     """print("Python ")"""
     return "Python {}".format(text.replace('_', ' '))
 
+
 @app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
     """print(n)"""
