@@ -13,7 +13,7 @@ class FileStorage:
         if obj:
             classid = "{}.{}".format(type(obj).__name__, str(obj.id))
             if classid in FileStorage.__objects:
-                del(FileStorage.__objects[classid])
+                del (FileStorage.__objects[classid])
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
@@ -25,13 +25,19 @@ class FileStorage:
                 if cls.__name__ == classname:
                     objs[obj] = FileStorage.__objects[obj]
 
-            return objs 
+            return objs
         else:
             return FileStorage.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+
+    def close(self):
+        """
+        Calls the reload method to deserialize the JSON file into objects.
+        """
+        self.reload()
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -53,15 +59,15 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass

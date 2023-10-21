@@ -25,12 +25,12 @@ class DBStorage:
         """
         Constructor for DBStorage class
         """
-        database = os.getenv("HBNB_MYSQL_DB") 
+        database = os.getenv("HBNB_MYSQL_DB")
         user = os.getenv("HBNB_MYSQL_USER")
-        password = os.getenv("HBNB_MYSQL_PWD") 
+        password = os.getenv("HBNB_MYSQL_PWD")
         host = os.getenv("HBNB_MYSQL_HOST")
-        connection_string = "mysql+mysqldb://{}:{}@{}:3306/{}"\
-                .format(user, password, host, database)
+        connection_string = "mysql+mysqldb://{}:{}@{}:3306/{}" \
+            .format(user, password, host, database)
         DBStorage.__engine = create_engine(connection_string, pool_pre_ping=True)
 
         if os.getenv("HBNB_ENV") == "test":
@@ -57,6 +57,12 @@ class DBStorage:
                     obj_dict[key] = row
 
         return obj_dict
+
+    def close(self):
+        """
+        Calls the remove method on the private session attribute to close the session.
+        """
+        self.__session.close()
 
     def new(self, obj):
         """
